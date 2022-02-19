@@ -1,0 +1,113 @@
+<h1 class="text-center text-info p-3">welcome to ToDoList App</h1>
+<section class="mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 m-auto">
+        <form
+          #shoppingForm="ngForm"
+          (ngSubmit)="addProduct(shoppingForm.value)"
+        >
+          <div class="form-row">
+            <div class="col-4">
+              <!----------- product name Input --------------->
+              <input
+                type="text"
+                class="form-control"
+                placeholder=" EnterProductName"
+                id="productNameInput"
+                name="productName"
+                ngModel
+                productName
+                #productName="ngModel"
+                required
+              />
+            </div>
+            <div></div>
+
+            <div class="col-4">
+              <!----------- product Price Input -------------------->
+              <input
+                type="text"
+                class="form-control"
+                placeholder=" EnterProductPrice"
+                id="productpriceInput"
+                name="productPrice"
+             
+                productPrice
+                ngModel
+                #productPrice="ngModel"
+                pattern="^[0-9]*$"
+                required
+              
+              />
+            </div>
+            <div class="col-2">
+              <button
+                type="submit"
+                class="btn-primary btn form-control"
+                id="addBtn"
+                [disabled]='shoppingForm.invalid'
+              >
+                Add
+              </button>
+              <!--  -->
+            </div>
+          </div>
+        </form>
+        <!-----------  validation product name Input --------------->
+        <div
+          class="bg-danger"
+          *ngIf="productName.touched && productName.invalid"
+        >
+          <div *ngIf="productName.errors?.required">product name required</div>
+        </div>
+
+        <!-----------  validation product Price Input --------------->
+        <div
+          class="bg-danger"
+          *ngIf="productPrice.touched&&productPrice.invalid">
+          <div *ngIf="productPrice.errors?.required">
+            product Price required
+          </div>
+        </div>
+        <div class="bg-danger" *ngIf="productPrice.errors?.pattern"> 
+          product Price is number only
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 m-auto">
+        <table class="table border-primary">
+          <thead>
+            <tr>
+              <th scope="col">No.</th>
+              <th scope="col">productName</th>
+              <th scope="col">productPrice</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr *ngFor="let p of products; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ p.productName }}</td>
+              <td>{{ p.productPrice }}</td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteProduct(i)">
+                  delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2 class="text-center text-danger">totalSum:{{ sum }}</h2>
+      </div>
+    </div>
+  </div>
+</section>
